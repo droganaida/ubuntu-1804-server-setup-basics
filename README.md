@@ -1,6 +1,6 @@
-# Стартовая настройка сервера Ubuntu 18.04
+## Стартовая настройка сервера Ubuntu 18.04
 
-## 1. Если нужен root, включаем, меняем пароль
+### 1. Если нужен root, включаем, меняем пароль
 ```
 sudo -i
 sudo passwd root
@@ -11,13 +11,13 @@ sudo passwd root
 sudo passwd -dl root
 ```
 
-## 2. Добавляем нового пользователя с root-привилегиями
+### 2. Добавляем нового пользователя с root-привилегиями
 ```
 adduser <user_name>
 gpasswd -a <user_name> sudo
 ```
 
-## 3. Меняем порт доступа по SSH с 22 на любой другой в конфиге
+### 3. Меняем порт доступа по SSH с 22 на любой другой в конфиге
 ```
 sudo nano /etc/ssh/sshd_config
 ```
@@ -35,7 +35,7 @@ ClientAliveCountMax 0
 sudo systemctl restart sshd
 ```
 
-## 4. Настраиваем сообщения на почту о попытке входа на сервер под учеткой root
+### 4. Настраиваем сообщения на почту о попытке входа на сервер под учеткой root
 ```
 sudo nano ~/.profile .
 ```
@@ -45,7 +45,7 @@ sudo nano ~/.profile .
 echo 'ALERT - Root Shell Access on:' `date` `who` | mail -s "Alert: Root Access from `who | awk '{print $6}'`" your@email.com
 ```
 
-### Установка postfix
+**Установка postfix**
 ```
 sudo apt install mailutils
 ```
@@ -81,7 +81,7 @@ echo 'Hello!' | mail -s 'Greeteings' your@email.com
 
 Ошибки логируются в файле /var/log/mail.err
 
-## 5. Настройка SSH MOTD (сообщение при логине)
+### 5. Настройка SSH MOTD (сообщение при логине)
 ```
 sudo nano /etc/motd
 ```
@@ -122,7 +122,7 @@ Banner /etc/issue.net
 sudo systemctl restart sshd
 ```
 
-## 6. Устанавливаем fail2ban (защита от брутфорса)
+### 6. Устанавливаем fail2ban (защита от брутфорса)
 ```
 sudo apt install fail2ban
 ```
@@ -163,13 +163,13 @@ enabled = true
 sudo service fail2ban start
 ```
 
-## 7. Настраиваем фаервол
+### 7. Настраиваем фаервол
 
 Проверить статус UFW
 ```
 sudo ufw status verbose
 ```
-* Пока не сделаны все настройки не включаем, чтобы не отстрелить себе ногу! *
+**Пока не сделаны все настройки не включаем, чтобы не отстрелить себе ногу!**
 
 Если требуется IPV6
 ```
@@ -202,38 +202,17 @@ sudo ufw enable
 ```
 
 Разрешаем HTTP и HTTPS (если на сервере есть SSL-сертификат)
-```
-sudo ufw allow http
-```
-или
-```
-sudo ufw allow 80
-```
-```
-sudo ufw allow https
-```
-или
-```
-sudo ufw allow 443
-```
+
+`sudo ufw allow http` или `sudo ufw allow 80`
+`sudo ufw allow https` или `sudo ufw allow 443`
 
 Разрешаем FTP
-```
-sudo ufw allow ftp
-```
-или
-```
-sudo ufw allow 21/tcp
-```
+
+`sudo ufw allow ftp` или `sudo ufw allow 21/tcp`
 
 Если нужно запретить коннект, делаем аналогично через deny
-```
-sudo ufw deny http
-```
-или
-```
-sudo ufw deny 80
-```
+
+`sudo ufw deny http` или `sudo ufw deny 80`
 
 Доступ к диапазону портов (6000-6007)
 ```
@@ -255,7 +234,7 @@ sudo ufw allow from 15.15.15.51 to any port 22
 sudo ufw allow from 15.15.15.0/24
 ```
 
-### Удаление правил
+#### Удаление правил
 По номеру
 ```
 sudo ufw status numbered
@@ -277,7 +256,7 @@ sudo ufw reset
 sudo ufw disable
 ```
 
-## 8. Защищаем shared memory
+### 8. Защищаем shared memory
 ```
 sudo nano /etc/fstab
 ```
@@ -293,7 +272,7 @@ tmpfs /run/shm tmpfs defaults,noexec,nosuid 0 0
 sudo reboot
 ```
 
-## 9. Сетевая безопасность
+### 9. Сетевая безопасность
 ```
 sudo nano /etc/sysctl.conf
 ```
@@ -320,7 +299,7 @@ net.ipv4.conf.all.log_martians = 1
 sudo sysctl -p
 ```
 
-## 10. Устанавливаем время на сервере
+### 10. Устанавливаем время на сервере
 Спросить который час
 ```
 date "+%H:%M:%S   %d/%m/%y"
