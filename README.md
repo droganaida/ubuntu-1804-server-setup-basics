@@ -206,13 +206,16 @@ sudo ufw enable
 `sudo ufw allow http` или `sudo ufw allow 80`
 `sudo ufw allow https` или `sudo ufw allow 443`
 
+
 Разрешаем FTP
 
 `sudo ufw allow ftp` или `sudo ufw allow 21/tcp`
 
+
 Если нужно запретить коннект, делаем аналогично через deny
 
 `sudo ufw deny http` или `sudo ufw deny 80`
+
 
 Доступ к диапазону портов (6000-6007)
 ```
